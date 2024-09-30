@@ -14,11 +14,23 @@ import androidx.compose.ui.tooling.preview.Preview
 import android.example.composejoshua.ui.theme.ComposeJoshuaTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.runtime.*
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.unit.dp
+
+
 
 
 class MainActivity : ComponentActivity() {
@@ -48,6 +60,10 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
         mutableStateOf("")
     }
 
+    var isUserBelow18 by remember {
+      mutableStateOf(false)
+    }
+
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -55,10 +71,40 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
     ){
         TextField(
             value = enteredValue,
-            onValueChange = { newText -> enteredValue = newText}
+            onValueChange = { newText -> enteredValue = newText},
+            label = { Text ( text =  "Name" )},
+            placeholder = { Text(text = "Enter your name")},
+            leadingIcon  =  { Icon (imageVector = Icons.Default.Email, contentDescription = "Email Icon") },
+
+            isError =  isUserBelow18,
+
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Number,
+                imeAction = ImeAction.Done
+            ),
+            keyboardActions = KeyboardActions(
+                onDone =  {
+                    isUserBelow18 = validateAge(inputText = enteredValue)
+                }
+            )
+
         )
-        Text(text = "Input Text: $enteredValue")
+
+        if (isUserBelow18) {
+//            Text(text = "Input Text: $enteredValue")
+            Text(
+                text = "Hello, you are not upto 18, you should be 18 and above",
+//                color = MaterialTheme.colors.error,
+                color = Color(0xFFFF0000) ,
+                modifier = Modifier.padding(start = 16.dp)
+                )
+        }
     }
+
+}
+
+private fun validateAge(inputText: String):Boolean{
+    return inputText.toInt() < 18
 }
 
 @Preview(showBackground = true)
