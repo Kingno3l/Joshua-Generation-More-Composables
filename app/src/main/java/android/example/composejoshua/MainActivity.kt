@@ -33,6 +33,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.runtime.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
@@ -57,6 +59,7 @@ class MainActivity : ComponentActivity() {
                         name = "Android",
                         modifier = Modifier.padding(innerPadding)
                     )
+                    CheckB()
                 }
             }
         }
@@ -69,23 +72,33 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun SwitchComp(){
+fun CheckB(){
 
-    var switchOn by remember {
+    var checked by remember {
         mutableStateOf(false)
     }
-    Row() {
-        Switch(
-            checked = switchOn,
+
+    val ctx = LocalContext.current
+
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        Checkbox(
+            checked = checked,
             onCheckedChange = {
-                    switchState -> switchOn = switchState
+                    checkStatus ->
+                checked = checkStatus
+
+                Toast.makeText(
+                    ctx,
+                    "This is a check box, and you checked: $checkStatus",
+                    Toast.LENGTH_LONG
+                ).show()
             },
-            colors = SwitchDefaults.colors(
-                checkedThumbColor = Color.Yellow,
-                checkedTrackColor = Color.Green
+            colors = CheckboxDefaults.colors(
+                checkedColor = Color.Green,
+                uncheckedColor = Color.Red
             )
         )
-        Text(text = "Jesus Mode")
+        Text(text = "Toyota")
     }
 }
 
@@ -93,6 +106,6 @@ fun SwitchComp(){
 @Composable
 fun GreetingPreview() {
     ComposeJoshuaTheme {
-        SwitchComp()
+        CheckB()
     }
 }
