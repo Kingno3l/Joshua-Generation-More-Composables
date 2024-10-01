@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import android.example.composejoshua.ui.theme.ComposeJoshuaTheme
+import android.widget.ProgressBar
 import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.benchmark.perfetto.Row
@@ -20,6 +21,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.material.icons.Icons
@@ -35,6 +37,7 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
@@ -59,7 +62,8 @@ class MainActivity : ComponentActivity() {
                         name = "Android",
                         modifier = Modifier.padding(innerPadding)
                     )
-                    CheckB()
+                    DeterminateProgress()
+
                 }
             }
         }
@@ -72,79 +76,52 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun CheckB(){
+fun IndeterminateProgress() {
 
-    var checked by remember {
-        mutableStateOf(false)
-    }
+    Row() {
+        CircularProgressIndicator(
+            modifier = Modifier.size(size = 80.dp),
+            color = Color.Green,
+            strokeWidth = 10.dp,
 
-    val ctx = LocalContext.current.applicationContext
-
-    Row(verticalAlignment = Alignment.CenterVertically) {
-        Checkbox(
-            checked = checked,
-            onCheckedChange = {
-                    checkStatus ->
-                checked = checkStatus
-
-                Toast.makeText(
-                    ctx,
-                    "This is a check box, and you checked: $checkStatus",
-                    Toast.LENGTH_LONG
-                ).show()
-            },
-            colors = CheckboxDefaults.colors(
-                checkedColor = Color.Green,
-                uncheckedColor = Color.Red
             )
-        )
-        Text(text = "Toyota")
+        Text(text = "Loading...")
     }
+
 }
 
 @Composable
-fun MultiCheckB(){
+fun DeterminateProgress() {
 
-    val toppings: List<String> = listOf("Toyota", "Honda", "Benz", "Ford", "Volkswagen", "Tesla")
-    val ctx = LocalContext.current.applicationContext
+    Row() {
+        CircularProgressIndicator(
+            modifier = Modifier.size(size = 80.dp),
+            color = Color.Green,
+            strokeWidth = 10.dp,
 
-    Column(horizontalAlignment = Alignment.Start) {
+            )
+        Text(text = "Loading...")
 
-        toppings.forEach{
-            toppingName ->
-            var checked by remember {
-                mutableStateOf(false)
-            }
+        CircularProgressIndicator(
+            progress = 0.8f,
+            modifier = Modifier.size(size = 80.dp),
+            color = Color.Green,
+            strokeWidth = 10.dp,
 
-            Row(verticalAlignment = Alignment.CenterVertically){
-                Checkbox(
-                    checked = checked,
-                    onCheckedChange = {
-                        checkedStatus -> checked = checkedStatus
-
-                        Toast.makeText(
-                            ctx,
-                            "You selected $toppingName $checked",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    },
-                    colors = CheckboxDefaults.colors(
-                        checkedColor = Color.Cyan,
-                        uncheckedColor = Color.Red
-                    )
-                )
-                Text(text = toppingName)
-            }
-        }
+            )
+        Text(text = "Loading...")
     }
 
 
+
 }
+
 
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
     ComposeJoshuaTheme {
-        MultiCheckB()
+        IndeterminateProgress()
+        DeterminateProgress()
     }
 }
