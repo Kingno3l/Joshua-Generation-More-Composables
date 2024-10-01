@@ -12,11 +12,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import android.example.composejoshua.ui.theme.ComposeJoshuaTheme
+import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.benchmark.perfetto.Row
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material3.Icon
@@ -31,6 +36,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.RadioButton
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -78,11 +84,47 @@ fun MyRadio(){
     }
 }
 
+@Composable
+fun RadioGroup(){
+    val ctx = LocalContext.current
+
+    val optionsForRadio = listOf("Rice", "Beans", "Yam")
+
+    var selectedItem by remember{
+        mutableStateOf(optionsForRadio[0])
+    }
+
+    Column(modifier = Modifier.selectableGroup()) {
+
+        optionsForRadio.forEach{ label ->
+            Row( modifier = Modifier
+                .fillMaxWidth()
+                .height(70.dp)
+                .selectable(
+                    selected = (selectedItem == label),
+                    onClick = { selectedItem == label },
+                    role = Role.RadioButton
+                )
+                .padding(horizontal = 16.dp)
+            ) {
+
+                RadioButton(
+                    modifier = Modifier.padding(end = 16.dp),
+                    onClick = null,
+                    selected = (selectedItem == label)
+                )
+                Text(text = label)
+            }
+        }
+    }
+}
+
 
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
     ComposeJoshuaTheme {
-        MyRadio()
+//        MyRadio()
+        RadioGroup()
     }
 }
