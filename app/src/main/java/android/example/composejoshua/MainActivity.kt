@@ -34,6 +34,8 @@ import androidx.compose.runtime.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.RadioButton
+import androidx.compose.material3.Switch
+import androidx.compose.material3.SwitchDefaults
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.semantics.Role
@@ -67,64 +69,30 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun MyRadio(){
-    val clickRadio = LocalContext.current
+fun SwitchComp(){
 
-    Row(verticalAlignment = Alignment.CenterVertically){
-        RadioButton(
-            selected = false,
-            onClick = {
-                Toast.makeText(
-                    clickRadio,
-                    "I am a Youth for Jesus",
-                    Toast.LENGTH_LONG
-                ).show()
-            })
-        Text(text = "Youth")
+    var switchOn by remember {
+        mutableStateOf(false)
+    }
+    Row() {
+        Switch(
+            checked = switchOn,
+            onCheckedChange = {
+                    switchState -> switchOn = switchState
+            },
+            colors = SwitchDefaults.colors(
+                checkedThumbColor = Color.Yellow,
+                checkedTrackColor = Color.Green
+            )
+        )
+        Text(text = "Jesus Mode")
     }
 }
-
-@Composable
-fun RadioGroup(){
-    val ctx = LocalContext.current
-
-    val optionsForRadio = listOf("Rice", "Beans", "Yam")
-
-    var (selectedItem, onOptionSelected) = remember{
-        mutableStateOf(optionsForRadio[0])
-    }
-
-    Column(modifier = Modifier.selectableGroup()) {
-
-        optionsForRadio.forEach{ label ->
-            Row( modifier = Modifier
-                .fillMaxWidth()
-                .height(70.dp)
-                .selectable(
-                    selected = (selectedItem == label),
-                    onClick = { onOptionSelected(label)},
-                    role = Role.RadioButton
-                )
-                .padding(horizontal = 16.dp)
-            ) {
-
-                RadioButton(
-                    modifier = Modifier.padding(end = 16.dp),
-                    onClick = {onOptionSelected(label)},
-                    selected = (selectedItem == label)
-                )
-                Text(text = label)
-            }
-        }
-    }
-}
-
 
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
     ComposeJoshuaTheme {
-//        MyRadio()
-        RadioGroup()
+        SwitchComp()
     }
 }
