@@ -78,7 +78,7 @@ fun CheckB(){
         mutableStateOf(false)
     }
 
-    val ctx = LocalContext.current
+    val ctx = LocalContext.current.applicationContext
 
     Row(verticalAlignment = Alignment.CenterVertically) {
         Checkbox(
@@ -102,10 +102,49 @@ fun CheckB(){
     }
 }
 
+@Composable
+fun MultiCheckB(){
+
+    val toppings: List<String> = listOf("Toyota", "Honda", "Benz", "Ford", "Volkswagen", "Tesla")
+    val ctx = LocalContext.current.applicationContext
+
+    Column(horizontalAlignment = Alignment.Start) {
+
+        toppings.forEach{
+            toppingName ->
+            var checked by remember {
+                mutableStateOf(false)
+            }
+
+            Row(verticalAlignment = Alignment.CenterVertically){
+                Checkbox(
+                    checked = checked,
+                    onCheckedChange = {
+                        checkedStatus -> checked = checkedStatus
+
+                        Toast.makeText(
+                            ctx,
+                            "You selected $toppingName $checked",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    },
+                    colors = CheckboxDefaults.colors(
+                        checkedColor = Color.Cyan,
+                        uncheckedColor = Color.Red
+                    )
+                )
+                Text(text = toppingName)
+            }
+        }
+    }
+
+
+}
+
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
     ComposeJoshuaTheme {
-        CheckB()
+        MultiCheckB()
     }
 }
