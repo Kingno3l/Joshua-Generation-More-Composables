@@ -90,7 +90,7 @@ fun RadioGroup(){
 
     val optionsForRadio = listOf("Rice", "Beans", "Yam")
 
-    var selectedItem by remember{
+    var (selectedItem, onOptionSelected) = remember{
         mutableStateOf(optionsForRadio[0])
     }
 
@@ -102,7 +102,7 @@ fun RadioGroup(){
                 .height(70.dp)
                 .selectable(
                     selected = (selectedItem == label),
-                    onClick = { selectedItem == label },
+                    onClick = { onOptionSelected(label)},
                     role = Role.RadioButton
                 )
                 .padding(horizontal = 16.dp)
@@ -110,7 +110,7 @@ fun RadioGroup(){
 
                 RadioButton(
                     modifier = Modifier.padding(end = 16.dp),
-                    onClick = null,
+                    onClick = {onOptionSelected(label)},
                     selected = (selectedItem == label)
                 )
                 Text(text = label)
