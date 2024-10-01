@@ -52,60 +52,9 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
-//    Text(
-//        text = "Hello $name!",
-//        modifier = modifier
-//    )
-    var enteredValue by remember {
-        mutableStateOf("")
-    }
-
-    var isUserBelow18 by remember {
-      mutableStateOf(false)
-    }
-
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ){
-        TextField(
-            value = enteredValue,
-            onValueChange = { newText -> enteredValue = newText},
-            label = { Text ( text =  "Name" )},
-            placeholder = { Text(text = "Enter your name")},
-            leadingIcon  =  { Icon (imageVector = Icons.Default.Email, contentDescription = "Email Icon") },
-
-            isError =  isUserBelow18,
-
-            keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Number,
-                imeAction = ImeAction.Done
-            ),
-            keyboardActions = KeyboardActions(
-                onDone =  {
-                    isUserBelow18 = validateAge(inputText = enteredValue)
-                }
-            )
-
-        )
-
-        if (isUserBelow18) {
-//            Text(text = "Input Text: $enteredValue")
-            Text(
-                text = "Hello, you are not upto 18, you should be 18 and above",
-//                color = MaterialTheme.colors.error,
-                color = Color(0xFFFF0000) ,
-                modifier = Modifier.padding(start = 16.dp)
-                )
-        }
-    }
 
 }
 
-private fun validateAge(inputText: String):Boolean{
-    return inputText.toInt() < 18
-}
 
 @Preview(showBackground = true)
 @Composable
