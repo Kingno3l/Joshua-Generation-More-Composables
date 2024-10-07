@@ -35,6 +35,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.runtime.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -62,7 +63,7 @@ class MainActivity : ComponentActivity() {
                         name = "Android",
                         modifier = Modifier.padding(innerPadding)
                     )
-                    DeterminateProgress()
+                    CodingChallenge()
 
                 }
             }
@@ -71,48 +72,37 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
+fun CodingChallenge() {
+
+    var progressnow by remember {
+        mutableStateOf(0.1f)
+    }
+
+    Column(
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    )
+    {
+CircularProgressIndicator(
+    progress =  progressnow,
+    strokeWidth = 8.dp,
+    modifier = Modifier.size(150.dp),
+    color =  Color.Green
+)
+        Button(
+            onClick = {
+                progressnow += 0.1f
+            }) {
+            Text(text = "Click me to increase progress bar")
+            
+        }
+
+    }
+}
+
+
+@Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
-
-}
-
-@Composable
-fun IndeterminateProgress() {
-
-    Row() {
-        CircularProgressIndicator(
-            modifier = Modifier.size(size = 80.dp),
-            color = Color.Green,
-            strokeWidth = 10.dp,
-
-            )
-        Text(text = "Loading...")
-    }
-
-}
-
-@Composable
-fun DeterminateProgress() {
-
-    Row() {
-        CircularProgressIndicator(
-            modifier = Modifier.size(size = 80.dp),
-            color = Color.Green,
-            strokeWidth = 10.dp,
-
-            )
-        Text(text = "Loading...")
-
-        CircularProgressIndicator(
-            progress = 0.8f,
-            modifier = Modifier.size(size = 80.dp),
-            color = Color.Green,
-            strokeWidth = 10.dp,
-
-            )
-        Text(text = "Loading...")
-    }
-
-
 
 }
 
@@ -121,7 +111,6 @@ fun DeterminateProgress() {
 @Composable
 fun GreetingPreview() {
     ComposeJoshuaTheme {
-        IndeterminateProgress()
-        DeterminateProgress()
+        CodingChallenge()
     }
 }
