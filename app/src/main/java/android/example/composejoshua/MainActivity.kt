@@ -35,13 +35,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.runtime.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
+import androidx.compose.material3.TopAppBar
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.semantics.Role
@@ -63,7 +69,7 @@ class MainActivity : ComponentActivity() {
                         name = "Android",
                         modifier = Modifier.padding(innerPadding)
                     )
-                    CodingChallenge()
+                    ScaffoldUI()
 
                 }
             }
@@ -72,38 +78,43 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun CodingChallenge() {
-
-    var progressnow by remember {
-        mutableStateOf(0.1f)
-    }
-
-    Column(
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    )
-    {
-CircularProgressIndicator(
-    progress =  progressnow,
-    strokeWidth = 8.dp,
-    modifier = Modifier.size(150.dp),
-    color =  Color.Green
-)
-        Button(
-            onClick = {
-                progressnow += 0.1f
-            }) {
-            Text(text = "Click me to increase progress bar")
-            
-        }
-
-    }
-}
-
-
-@Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
 
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun ScaffoldUI() {
+
+    val ctx = LocalContext.current.applicationContext
+    TopAppBar(
+        title = { Text(text = "This is our text") },
+        navigationIcon = {
+            IconButton(onClick = {
+                Toast.makeText(ctx,
+                    "You clicked the icon",
+                    Toast.LENGTH_SHORT)
+                    .show()}) {
+
+                Icon(
+                    imageVector = Icons.Filled.ArrowBack,
+                    contentDescription = "Navigation Icon"
+                )
+            }
+        },
+        actions = {
+            IconButton(onClick = { /*TODO*/ }
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.Search,
+                    contentDescription = "Search Icon"
+                )
+
+            }
+        },
+
+
+    )
 }
 
 
@@ -111,6 +122,6 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 @Composable
 fun GreetingPreview() {
     ComposeJoshuaTheme {
-        CodingChallenge()
+        ScaffoldUI()
     }
 }
