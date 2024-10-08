@@ -17,6 +17,7 @@ import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.benchmark.perfetto.Row
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -35,6 +36,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.runtime.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
@@ -46,6 +49,8 @@ import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FabPosition
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -81,6 +86,33 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+
+
+}
+
+@Composable
+fun UIu() {
+    val context = LocalContext.current.applicationContext
+
+    Box(modifier = Modifier.fillMaxSize()){
+        FloatingActionButton(
+
+            modifier = Modifier
+                .padding(all = 20.dp)
+                .align(alignment = Alignment.BottomEnd),
+            onClick = {
+                Toast.makeText(context, "You clicked fab", Toast.LENGTH_LONG).show()
+            }
+        ) {
+            Icon(
+                imageVector = Icons.Filled.AddCircle,
+                contentDescription = "Add Note"
+            )
+
+        }
+    }
+
+
 }
 
 @Composable
@@ -114,10 +146,21 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ScaffoldUI() {
+    val context = LocalContext.current.applicationContext
+
     Scaffold(
         bottomBar = {
             MyBottom()
-        }
+        },
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = {
+                    Toast.makeText(context, "You clicked fab", Toast.LENGTH_LONG).show()
+                }) {
+Icon(imageVector = Icons.Filled.AddCircle, contentDescription = "Add Icon for fab")
+            }
+        },
+        floatingActionButtonPosition = FabPosition.End
     ) { innerPadding ->
         Column(
             modifier = Modifier.padding(innerPadding)
@@ -128,10 +171,13 @@ fun ScaffoldUI() {
 }
 
 
+
+
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
     ComposeJoshuaTheme {
         ScaffoldUI()
+
     }
 }
