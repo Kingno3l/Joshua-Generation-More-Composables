@@ -36,14 +36,19 @@ import androidx.compose.runtime.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
@@ -75,6 +80,30 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
+}
+
+@Composable
+fun MyBottom() {
+    val selectedItem = remember {
+        mutableStateOf(0)
+    }
+    val items = listOf("Home", "Settings", "Favorite")
+    val icons = listOf(Icons.Filled.Home, Icons.Filled.Settings, Icons.Filled.Favorite)
+
+    NavigationBar {
+        items.forEachIndexed { index, item ->
+            NavigationBarItem(
+                icon = { Icon(icons[index], contentDescription = item)},
+                label =  { Text(item)},
+                selected =  selectedItem.value == index,
+                onClick =  {
+                    selectedItem.value = index
+                }
+            )
+
+        }
+    }
 }
 
 @Composable
@@ -85,36 +114,17 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ScaffoldUI() {
-
-    val ctx = LocalContext.current.applicationContext
-    TopAppBar(
-        title = { Text(text = "This is our text") },
-        navigationIcon = {
-            IconButton(onClick = {
-                Toast.makeText(ctx,
-                    "You clicked the icon",
-                    Toast.LENGTH_SHORT)
-                    .show()}) {
-
-                Icon(
-                    imageVector = Icons.Filled.ArrowBack,
-                    contentDescription = "Navigation Icon"
-                )
-            }
-        },
-        actions = {
-            IconButton(onClick = { /*TODO*/ }
-            ) {
-                Icon(
-                    imageVector = Icons.Filled.Search,
-                    contentDescription = "Search Icon"
-                )
-
-            }
-        },
-
-
-    )
+    Scaffold(
+        bottomBar = {
+            MyBottom()
+        }
+    ) { innerPadding ->
+        Column(
+            modifier = Modifier.padding(innerPadding)
+        ) {
+            Text(text = "Hello, compose with bottom navigation!")
+        }
+    }
 }
 
 
