@@ -45,6 +45,8 @@ import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -79,97 +81,45 @@ class MainActivity : ComponentActivity() {
                         name = "Android",
                         modifier = Modifier.padding(innerPadding)
                     )
-                    ScaffoldUI()
 
                 }
             }
         }
     }
-
-
-
 }
 
-@Composable
-fun UIu() {
-    val context = LocalContext.current.applicationContext
 
-    Box(modifier = Modifier.fillMaxSize()){
-        FloatingActionButton(
-
-            modifier = Modifier
-                .padding(all = 20.dp)
-                .align(alignment = Alignment.BottomEnd),
-            onClick = {
-                Toast.makeText(context, "You clicked fab", Toast.LENGTH_LONG).show()
-            }
-        ) {
-            Icon(
-                imageVector = Icons.Filled.AddCircle,
-                contentDescription = "Add Note"
-            )
-
-        }
-    }
-
-
-}
-
-@Composable
-fun MyBottom() {
-    val selectedItem = remember {
-        mutableStateOf(0)
-    }
-    val items = listOf("Home", "Settings", "Favorite")
-    val icons = listOf(Icons.Filled.Home, Icons.Filled.Settings, Icons.Filled.Favorite)
-
-    NavigationBar {
-        items.forEachIndexed { index, item ->
-            NavigationBarItem(
-                icon = { Icon(icons[index], contentDescription = item)},
-                label =  { Text(item)},
-                selected =  selectedItem.value == index,
-                onClick =  {
-                    selectedItem.value = index
-                }
-            )
-
-        }
-    }
-}
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
 
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ScaffoldUI() {
-    val context = LocalContext.current.applicationContext
-
-    Scaffold(
-        bottomBar = {
-            MyBottom()
-        },
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = {
-                    Toast.makeText(context, "You clicked fab", Toast.LENGTH_LONG).show()
-                }) {
-Icon(imageVector = Icons.Filled.AddCircle, contentDescription = "Add Icon for fab")
-            }
-        },
-        floatingActionButtonPosition = FabPosition.End
-    ) { innerPadding ->
+fun MyCard() {
+    Card(
+        modifier = Modifier
+            .padding(16.dp)
+            .fillMaxWidth(),
+        elevation = CardDefaults.cardElevation(8.dp)
+    ) {
         Column(
-            modifier = Modifier.padding(innerPadding)
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.Start
         ) {
-            Text(text = "Hello, compose with bottom navigation!")
+            Text(
+                text = "Card Title",
+                style = MaterialTheme.typography.headlineMedium,
+                color = MaterialTheme.colorScheme.primary
+            )
+            Text(
+                text = "This is a description inside the card.",
+                style = MaterialTheme.typography.bodyMedium
+            )
         }
     }
 }
-
 
 
 
@@ -177,7 +127,6 @@ Icon(imageVector = Icons.Filled.AddCircle, contentDescription = "Add Icon for fa
 @Composable
 fun GreetingPreview() {
     ComposeJoshuaTheme {
-        ScaffoldUI()
-
+        MyCard()
     }
 }
