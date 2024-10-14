@@ -28,3 +28,8 @@ val add : (Int, Int) -> Int = {a: Int, b: Int -> a + b}
 val added = {a: Int, b: Int -> a + b}
 
 val adding: (Int, Int) -> Int = {a, b -> a + b }
+
+//with parameters and  return type
+//with paramters and no return type
+//no parameter and no return type
+//no parameters and return type
