@@ -31,5 +31,5 @@ val adding: (Int, Int) -> Int = {a, b -> a + b }
 
 //with parameters and  return type
 //with paramters and no return type
-//no parameter and no return type
-//no parameters and return type
+//no parameter but with return type
+//no parameters and no return type
