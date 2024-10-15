@@ -23,6 +23,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.material.icons.Icons
@@ -66,8 +68,7 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-
-
+import androidx.compose.ui.unit.sp
 
 
 class MainActivity : ComponentActivity() {
@@ -82,9 +83,48 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier.padding(innerPadding)
                     )
 
+                    var osList = listOf("Android", "IOS", "Windows", "Linux", "Parrot",  "Android", "iOS", "Windows",
+                        "Linux", "iOS", "Windows",
+                        "Linux", "iOS", "Windows",
+                        "Linux", "iOS", "Windows", "Linux",
+                        "iOS", "Windows", "Linux",
+                        "iOS", "Windows",
+                        "Linux", "iOS", "Windows", "Linux", "iOS", "Windows", "Linux", "iOS",)
+                    PopulateItems(osList)
+
                 }
             }
         }
+    }
+}
+
+@Composable
+fun PopulateItems(osList: List<String>) {
+//    Column() {
+//        osList.forEach{
+//            CreateRowItem(osNmae = it)
+//        }
+//    }
+
+    LazyColumn(){
+        item {
+            Text(text = "Joshua first item")
+        }
+
+        items(8){ index ->
+            Text(text = "item: $index")
+        }
+
+        items(osList){
+            Text(text = "Name of OS: $it")
+        }
+    }
+}
+
+@Composable
+fun CreateRowItem(osNmae: String) {
+    Row() {
+        Text(text = osNmae, fontSize = 32.sp)
     }
 }
 
@@ -95,38 +135,23 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 
 }
 
-@Composable
-fun MyCard() {
-    Card(
-        modifier = Modifier
-            .padding(16.dp)
-            .fillMaxWidth(),
-        elevation = CardDefaults.cardElevation(8.dp)
-    ) {
-        Column(
-            modifier = Modifier.padding(16.dp),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.Start
-        ) {
-            Text(
-                text = "Card Title",
-                style = MaterialTheme.typography.headlineMedium,
-                color = MaterialTheme.colorScheme.primary
-            )
-            Text(
-                text = "This is a description inside the card.",
-                style = MaterialTheme.typography.bodyMedium
-            )
-        }
-    }
-}
-
-
 
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
     ComposeJoshuaTheme {
-        MyCard()
+        // Sample list of operating systems for preview
+        val osList = listOf(
+            "Android", "iOS", "Windows",
+            "Linux", "iOS", "Windows",
+            "Linux", "iOS", "Windows",
+            "Linux", "iOS", "Windows", "Linux",
+            "iOS", "Windows", "Linux",
+            "iOS", "Windows",
+            "Linux", "iOS", "Windows", "Linux", "iOS", "Windows", "Linux", "iOS", "Windows", "Linux", "iOS", "Windows", "Linux", "iOS", "Windows", "Linux", "iOS", "Windows", "Linux", "iOS", "Windows", "Linux", "iOS", "Windows", "Linux", "iOS", "Windows", "Linux", "iOS", "Windows", "Linux", "iOS", "Windows", "Linux", "iOS", "Windows", "Linux", "iOS", "Windows", "Linux", "iOS", "Windows", "Linux", "iOS", "Windows", "Linux", "iOS", "Windows", "Linux")
+
+        ComposeJoshuaTheme {
+            PopulateItems(osList = osList)
+        }
     }
 }
