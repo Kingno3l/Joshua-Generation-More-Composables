@@ -24,6 +24,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
@@ -106,9 +107,23 @@ fun PopulateItems(osList: List<String>) {
 //        }
 //    }
 
-    LazyColumn(){
+//    LazyColumn(){
+//        item {
+//            Text(text = "Joshua first item")
+//        }
+//
+//        items(8){ index ->
+//            Text(text = "item: $index")
+//        }
+//
+//        items(osList){
+//            Text(text = "Name of OS: $it")
+//        }
+//    }
+
+    LazyRow(){
         item {
-            Text(text = "Joshua first item")
+            Text(text = "Joshua first item ")
         }
 
         items(8){ index ->
